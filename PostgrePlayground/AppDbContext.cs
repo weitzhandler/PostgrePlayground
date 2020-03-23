@@ -13,7 +13,7 @@ namespace PostgrePlayground
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-      optionsBuilder.UseNpgsql(@"Host=localhost;Username=postgres;Database=playground;Password=Sf_@dG3fm)+2");
+      optionsBuilder.UseNpgsql(@"Host=127.0.0.1;Database=playground;Integrated Security=True");
     }
   }
 
