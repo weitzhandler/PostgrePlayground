@@ -24,19 +24,18 @@ namespace PostgrePlayground
       {
         await dbContext.Database.MigrateAsync();
 
-        dbContext.Contacts.Add(
-          new Contact
+        dbContext.SomeEntities.Add(
+          new SomeEntity
           {
-            Name = "Shimmy",
-            Address = new Address
+            Customer = new Customer
             {
-              AddressI = "sdfkjasdf",
-              AddressII = "sdfasdf"
-            },
-            Phones = new[]
-            {
-              new Phone { Title = "Home", Number = "1234567890" },
-              new Phone { Title = "Cell", Number = "0123456789" }
+              Name = "Roji",
+              Age = 35,
+              Orders = new[]
+              {
+                new Order { Price = 3, ShippingAddress = "Somewhere" },
+                new Order { Price = 3, ShippingAddress = "Nowhere" }
+              }
             }
           });
 
