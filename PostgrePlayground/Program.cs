@@ -33,7 +33,7 @@ namespace PostgrePlayground
               AddressI = "sdfkjasdf",
               AddressII = "sdfasdf"
             },
-            Phones =
+            Phones = new[]
             {
               new Phone { Title = "Home", Number = "1234567890" },
               new Phone { Title = "Cell", Number = "0123456789" }

@@ -15,21 +15,6 @@ namespace PostgrePlayground
     {
       optionsBuilder.UseNpgsql(@"Host=localhost;Username=postgres;Database=playground;Password=Sf_@dG3fm)+2");
     }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-      modelBuilder
-        .Entity<Contact>(contact =>
-        {
-          contact
-          .Property(c => c.Address)
-          .HasColumnType("jsonb");
-
-          contact
-          .Property(c => c.Phones)
-          .HasColumnType("jsonb");
-        });
-    }
   }
 
   public class Contact
@@ -38,16 +23,11 @@ namespace PostgrePlayground
 
     public string Name { get; set; }
 
-    [Column(TypeName = nameof(NpgsqlDbType.Jsonb))]
+    [Column(TypeName = "jsonb")]
     public Address Address { get; set; }
 
-    HashSet<Phone> _Phones;
-    [Column(TypeName = nameof(NpgsqlDbType.Jsonb))]
-    public HashSet<Phone> Phones
-    {
-      get => _Phones ??= new HashSet<Phone>();
-      set => _Phones = value;
-    }
+    [Column(TypeName = "jsonb")]
+    public Phone[] Phones { get; set; }
   }
 
   public class Phone
