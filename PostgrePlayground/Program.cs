@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Diagnostics;
+using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,11 +21,13 @@ namespace PostgrePlayground
 
       var services = host.Services;
 
-      using (var dbContext = services.GetRequiredService<AppDbContext>())
+      using (var context = services.GetRequiredService<AppDbContext>())
       {
-        await dbContext.Database.MigrateAsync();
+        var db = context.Database;
+        await db.EnsureDeletedAsync();
+        await db.EnsureCreatedAsync();
 
-        dbContext.SomeEntities.Add(
+        context.SomeEntities.Add(
           new SomeEntity
           {
             Customer = new Customer
@@ -39,8 +42,14 @@ namespace PostgrePlayground
             }
           });
 
-        await dbContext.SaveChangesAsync();
+        await context.SaveChangesAsync();
+        Debugger.Break();
+
+        db.EnsureDeleted();
       }
+
+
+
     }
   }
 }
