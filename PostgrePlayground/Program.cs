@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
@@ -27,22 +28,15 @@ namespace PostgrePlayground
         await db.EnsureDeletedAsync();
         await db.EnsureCreatedAsync();
 
-        context.SomeEntities.Add(
-          new SomeEntity
-          {
-            Customer = new Customer
-            {
-              Name = "Roji",
-              Age = 35,
-              Orders = new[]
-              {
-                new Order { Price = 3, ShippingAddress = "Somewhere" },
-                new Order { Price = 3, ShippingAddress = "Nowhere" }
-              }
-            }
-          });
+
+        context.Parents.Add(new Parent { WrappedText = new WrappedText("Hello") });
+
 
         await context.SaveChangesAsync();
+
+        context.Parents.Local.Clear();
+        var parents = await context.Parents.Where(p => p.WrappedText == "Hello").ToListAsync();
+
         Debugger.Break();
 
         db.EnsureDeleted();
