@@ -30,14 +30,17 @@ namespace PostgrePlayground
         context.SomeEntities.Add(
           new SomeEntity
           {
-            Customer = new Customer
+            Customers = 
             {
-              Name = "Roji",
-              Age = 35,
-              Orders = new[]
+              new Customer
               {
-                new Order { Price = 3, ShippingAddress = "Somewhere" },
-                new Order { Price = 3, ShippingAddress = "Nowhere" }
+                Name = "Roji",
+                Age = 35,
+                Orders =
+                {
+                  new Order { Price = 3, ShippingAddress = "Somewhere" },
+                  new Order { Price = 3, ShippingAddress = "Nowhere" }
+                }
               }
             }
           });

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
 using NpgsqlTypes;
@@ -18,21 +19,34 @@ namespace PostgrePlayground
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+      //modelBuilder.Entity<Customer>().Property(se => se.Orders).HasConversion(o => o.ToArray(), o => o.ToList());
+
     }
   }
 
   public class SomeEntity
   {
     public int Id { get; set; }
+    HashSet<Customer> _Customers;
     [Column(TypeName = "jsonb")]
-    public Customer Customer { get; set; }
+    public HashSet<Customer> Customers
+    {
+      get => _Customers ??= new HashSet<Customer>();
+      private set => _Customers = value;
+    }
   }
 
   public class Customer    // Mapped to a JSON column in the table
   {
     public string Name { get; set; }
     public int Age { get; set; }
-    public Order[] Orders { get; set; }
+    HashSet<Order> _Orders;
+    public HashSet<Order> Orders
+    {
+      get => _Orders ??= new HashSet<Order>();
+      private set => _Orders = value;
+    }
+
   }
 
   public class Order       // Part of the JSON column
